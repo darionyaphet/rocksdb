@@ -32,6 +32,25 @@ enum class TableFileCreationReason {
   kCompaction,
   kRecovery,
   kMisc,
+
+  std::ostream &operator<<(std::ostream &stream,
+                           const TableFileCreationReason& reason) {
+    switch (reason) {
+      case kFlush:
+        stream << "Flush";
+        break;
+      case kCompaction:
+        stream << "Compaction";
+        break;
+      case kRecovery:
+        stream << "Recovery";
+        break;
+      case kMisc:
+        stream << "Misc";
+        break;
+    }
+    return stream;
+  }
 };
 
 struct TableFileCreationBriefInfo {
@@ -100,6 +119,64 @@ enum class CompactionReason : int {
   kPeriodicCompaction,
   // total number of compaction reasons, new reasons must be added above this.
   kNumOfReasons,
+
+  std::ostream &operator<<(std::ostream &stream,
+                           const CompactionReason& reason) {
+    switch (reason) {
+      case kUnknown:
+        stream << "Unknown";
+        break;
+      case kLevelL0FilesNum:
+        stream << "LevelL0FilesNum";
+        break;
+      case kLevelMaxLevelSize:
+        stream << "LevelMaxLevelSize";
+        break;
+      case kUniversalSizeAmplification:
+        stream << "UniversalSizeAmplification";
+        break;
+      case kUniversalSizeRatio:
+        stream << "UniversalSizeRatio";
+        break;
+      case kUniversalSortedRunNum:
+        stream << "UniversalSortedRunNum";
+        break;
+      case kFIFOMaxSize:
+        stream << "FIFOMaxSize";
+        break;
+      case kFIFOReduceNumFiles:
+        stream << "FIFOReduceNumFiles";
+        break;
+      case kFIFOTtl:
+        stream << "FIFOTtl";
+        break;
+      case kManualCompaction:
+        stream << "ManualCompaction";
+        break;
+      case kFilesMarkedForCompaction:
+        stream << "FilesMarkedForCompaction";
+        break;
+      case kBottommostFiles:
+        stream << "BottommostFiles";
+        break;
+      case kTtl:
+        stream << "Ttl";
+        break;
+      case kFlush:
+        stream << "Flush";
+        break;
+      case kExternalSstIngestion:
+        stream << "ExternalSstIngestion";
+        break;
+      case kPeriodicCompaction:
+        stream << "PeriodicCompaction";
+        break;
+      case kNumOfReasons:
+        stream << "NumOfReasons";
+        break;
+    }
+    return stream;
+  }
 };
 
 enum class FlushReason : int {
@@ -118,6 +195,39 @@ enum class FlushReason : int {
   // When set the flush reason to kErrorRecoveryRetryFlush, SwitchMemtable
   // will not be called to avoid many small immutable memtables.
   kErrorRecoveryRetryFlush = 0xc,
+
+  std::ostream &operator<<(std::ostream &stream,
+                           const FlushReason& reason) {
+    switch (reason) {
+      case kOthers:
+        stream << "Others";
+      case kGetLiveFiles:
+        stream << "GetLiveFiles";
+      case kShutDown:
+        stream << "ShutDown";
+      case kExternalFileIngestion:
+        stream << "ExternalFileIngestion";
+      case kManualCompaction:
+        stream << "ManualCompaction";
+      case kWriteBufferManager:
+        stream << "WriteBufferManager";
+      case kWriteBufferFull:
+        stream << "WriteBufferFull";
+      case kTest:
+        stream << "Test";
+      case kDeleteFiles:
+        stream << "DeleteFiles";
+      case kAutoCompaction:
+        stream << "AutoCompaction";
+      case kManualFlush:
+        stream << "ManualFlush";
+      case kErrorRecovery:
+        stream << "ErrorRecovery";
+      case kErrorRecoveryRetryFlush:
+        stream << "ErrorRecoveryRetryFlush";
+    }
+    return stream;
+  }
 };
 
 enum class BackgroundErrorReason {
@@ -127,12 +237,44 @@ enum class BackgroundErrorReason {
   kMemTable,
   kManifestWrite,
   kFlushNoWAL,
+
+  std::ostream &operator<<(std::ostream &stream,
+                           const BackgroundErrorReason& reason) {
+    switch (reason) {
+      case kFlush:
+        stream << "Flush";
+      case kCompaction:
+        stream << "Compaction";
+      case kWriteCallback:
+        stream << "WriteCallback";
+      case kMemTable:
+        stream << "MemTable";
+      case kManifestWrite:
+        stream << "ManifestWrite";
+      case kFlushNoWAL:
+        stream << "FlushNoWAL";
+    }
+    return stream;
+  }
 };
 
 enum class WriteStallCondition {
   kNormal,
   kDelayed,
   kStopped,
+
+  std::ostream &operator<<(std::ostream &stream,
+                           const WriteStallCondition& condition) {
+    switch (condition) {
+      case kNormal:
+        stream << "Normal";
+      case kDelayed:
+        stream << "Delayed";
+      case kStopped:
+        stream << "Stopped";
+    }
+    return stream;
+  }
 };
 
 struct WriteStallInfo {
