@@ -325,6 +325,9 @@ class DB {
                      const Slice& value) {
     return Put(options, DefaultColumnFamily(), key, value);
   }
+  virtual Status Put(const Slice& key, const Slice& value) {
+    return Put(WriteOptions(), DefaultColumnFamily(), key, value);
+  }
 
   // Remove the database entry (if any) for "key".  Returns OK on
   // success, and a non-OK status on error.  It is not an error if "key"
